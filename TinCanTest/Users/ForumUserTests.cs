@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TinCan.Users;
 
 namespace TinCanTest.Users
 {
@@ -8,15 +9,15 @@ namespace TinCanTest.Users
     {
         [TestMethod]
         public void UsernameTest() {
-            TinCan.Users.ForumUser forumUserToTest = new TinCan.Users.ForumUserImp();
+            ForumUser forumUserToTest = GetTestForumUser();
             const string testUsername = "TestUsername";
             forumUserToTest.Username = testUsername;
             Assert.AreEqual(testUsername, forumUserToTest.Username);
         }
 
         [TestMethod]
-        public void FullNameTest() {            
-            TinCan.Users.ForumUser forumUserToTest = new TinCan.Users.ForumUserImp();
+        public void FullNameTest() {
+            ForumUser forumUserToTest = GetTestForumUser();
 
             const string testFirstName = "TestFirstName", testLastName = "TestLastName";            
             forumUserToTest.SetFullName(testFirstName, testLastName);
@@ -28,10 +29,15 @@ namespace TinCanTest.Users
 
         [TestMethod]
         public void DateCreatedTest() {
-            TinCan.Users.ForumUser userToTest = new TinCan.Users.ForumUserImp();            
+            ForumUser userToTest = GetTestForumUser();           
             DateTime retreivedUserDateCreated = userToTest.GetDateCreated();            
             DateTime expectedDateTimeCreated = DateTime.Now.Date;            
             Assert.AreEqual(expectedDateTimeCreated, retreivedUserDateCreated);
+        }
+
+        private ForumUser GetTestForumUser(){
+            TinCan.Users.ForumUserFactory newUserFactory = new ForumUserFactory();
+            return newUserFactory.CreateForumUser("TestForumUser");
         }
 
 
